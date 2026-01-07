@@ -8,7 +8,8 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
-  Activity
+  Activity,
+  Bell
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -22,6 +23,7 @@ const navItems = [
   { path: '/live-trends', label: 'Live Trends', icon: TrendingUp },
   { path: '/demand-forecast', label: 'Demand Forecast', icon: LineChart },
   { path: '/ai-decisions', label: 'AI Decisions', icon: Brain },
+  { path: '/ai-alerts', label: 'AI Alerts', icon: Bell },
   { path: '/purchase-orders', label: 'Purchase Orders', icon: ShoppingCart },
   { path: '/settings', label: 'Settings', icon: Settings },
 ];
