@@ -62,9 +62,9 @@ const AIDecisions = () => {
         <div className="animate-fade-up">
           <h2 className="text-2xl font-bold text-foreground flex items-center gap-2">
             <Brain className="w-6 h-6 text-primary" />
-            AI-Driven Decisions
+            Recommended Actions
           </h2>
-          <p className="text-muted-foreground mt-1">Review and approve AI-generated operational recommendations</p>
+          <p className="text-muted-foreground mt-1">Review and approve AI-recommended actions before execution.</p>
         </div>
 
         {/* Stats */}

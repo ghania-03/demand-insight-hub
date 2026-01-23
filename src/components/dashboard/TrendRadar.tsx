@@ -1,15 +1,28 @@
 import { TrendSignal, sourceIcons } from '@/lib/mockData';
 import { cn } from '@/lib/utils';
-import { TrendingUp, TrendingDown, Zap } from 'lucide-react';
+import { TrendingUp, TrendingDown, Zap, Search } from 'lucide-react';
 
 interface TrendRadarProps {
   signals: TrendSignal[];
 }
 
+const formatSearchVolume = (volume: number): string => {
+  if (volume >= 1000000) {
+    return `${(volume / 1000000).toFixed(1)}M`;
+  }
+  if (volume >= 1000) {
+    return `${(volume / 1000).toFixed(0)}K`;
+  }
+  return volume.toString();
+};
+
 export function TrendRadar({ signals }: TrendRadarProps) {
+  // Sort by search volume (highest first)
+  const sortedSignals = [...signals].sort((a, b) => (b.searchVolume || 0) - (a.searchVolume || 0));
+
   return (
     <div className="space-y-3">
-      {signals.map((signal) => (
+      {sortedSignals.map((signal) => (
         <div 
           key={signal.id}
           className="p-4 rounded-lg border bg-card hover:shadow-sm transition-all duration-200 group"
@@ -27,6 +40,18 @@ export function TrendRadar({ signals }: TrendRadarProps) {
               </div>
             </div>
             <div className="flex items-center gap-4">
+              {/* Search Volume */}
+              {signal.searchVolume > 0 && (
+                <div className="text-right">
+                  <div className="flex items-center gap-1 justify-end">
+                    <Search className="w-3.5 h-3.5 text-primary" />
+                    <span className="text-sm font-semibold text-foreground">
+                      {formatSearchVolume(signal.searchVolume)}
+                    </span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">searches</p>
+                </div>
+              )}
               <div className="text-right">
                 <div className="flex items-center gap-1 justify-end">
                   {signal.change24h > 0 ? (

@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { PurchaseOrderTable } from '@/components/dashboard/PurchaseOrderTable';
-import { purchaseOrders } from '@/lib/mockData';
+import { NewPOModal } from '@/components/dashboard/NewPOModal';
+import { purchaseOrders as initialPurchaseOrders, PurchaseOrder } from '@/lib/mockData';
+import { exportPurchaseOrdersToCSV } from '@/lib/exportUtils';
 import { ShoppingCart, Plus, Filter, Download, FileText, Truck, Package, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { toast } from '@/hooks/use-toast';
 
 const statusFilters = [
   { label: 'All', value: 'all' },
@@ -15,7 +18,9 @@ const statusFilters = [
 ];
 
 const PurchaseOrders = () => {
+  const [purchaseOrders, setPurchaseOrders] = useState<PurchaseOrder[]>(initialPurchaseOrders);
   const [activeFilter, setActiveFilter] = useState('all');
+  const [isNewPOModalOpen, setIsNewPOModalOpen] = useState(false);
 
   const filteredOrders = activeFilter === 'all' 
     ? purchaseOrders 
@@ -30,6 +35,29 @@ const PurchaseOrders = () => {
 
   const totalValue = purchaseOrders.reduce((acc, o) => acc + o.totalValue, 0);
 
+  const handleExport = () => {
+    if (filteredOrders.length === 0) {
+      toast({
+        title: "No Data to Export",
+        description: "There are no purchase orders matching the current filter.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const filterLabel = activeFilter === 'all' ? 'all' : activeFilter;
+    exportPurchaseOrdersToCSV(filteredOrders, `purchase-orders-${filterLabel}`);
+    
+    toast({
+      title: "Export Successful",
+      description: `${filteredOrders.length} purchase order(s) exported to CSV.`,
+    });
+  };
+
+  const handleCreatePO = (newPO: PurchaseOrder) => {
+    setPurchaseOrders(prev => [newPO, ...prev]);
+  };
+
   return (
     <DashboardLayout>
       <div className="space-y-6">
@@ -43,11 +71,11 @@ const PurchaseOrders = () => {
             <p className="text-muted-foreground mt-1">Track and manage replenishment orders</p>
           </div>
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" onClick={handleExport}>
               <Download className="w-4 h-4 mr-2" />
               Export
             </Button>
-            <Button size="sm">
+            <Button size="sm" onClick={() => setIsNewPOModalOpen(true)}>
               <Plus className="w-4 h-4 mr-2" />
               New PO
             </Button>
@@ -134,6 +162,13 @@ const PurchaseOrders = () => {
           </div>
         )}
       </div>
+
+      {/* New PO Modal */}
+      <NewPOModal
+        open={isNewPOModalOpen}
+        onOpenChange={setIsNewPOModalOpen}
+        onCreatePO={handleCreatePO}
+      />
     </DashboardLayout>
   );
 };
