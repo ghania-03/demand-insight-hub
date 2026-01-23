@@ -1,7 +1,7 @@
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { StatCard } from '@/components/dashboard/StatCard';
 import { AlertCard } from '@/components/dashboard/AlertCard';
-import { TrendingTable } from '@/components/dashboard/TrendingTable';
+import { TopTrendingSKUs } from '@/components/dashboard/TopTrendingSKUs';
 import { DemandChart } from '@/components/dashboard/DemandChart';
 import { 
   trendingSKUs, 
@@ -14,7 +14,7 @@ import {
   DollarSign, 
   Shield,
   Package,
-  BarChart3
+  Search
 } from 'lucide-react';
 
 const Overview = () => {
@@ -23,7 +23,7 @@ const Overview = () => {
       <div className="space-y-6">
         {/* Page Header */}
         <div className="animate-fade-up">
-          <h2 className="text-2xl font-bold text-foreground">Executive Overview</h2>
+          <h2 className="text-2xl font-bold text-foreground">Key Metrics</h2>
           <p className="text-muted-foreground mt-1">Real-time demand insights and AI-powered recommendations</p>
         </div>
 
@@ -63,22 +63,22 @@ const Overview = () => {
 
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-          {/* Trending SKUs - Takes 2 columns */}
+          {/* Top Trending SKUs - Takes 2 columns */}
           <div className="xl:col-span-2 bg-card rounded-xl border p-5 animate-fade-up" style={{ animationDelay: '0.2s' }}>
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
-                  <TrendingUp className="w-5 h-5 text-primary" />
-                  Trending SKUs at Risk
+                  <Search className="w-5 h-5 text-primary" />
+                  Top Trending SKUs
                 </h3>
-                <p className="text-sm text-muted-foreground">Top 5 products requiring attention</p>
+                <p className="text-sm text-muted-foreground">Retail items sorted by Google Search Volume</p>
               </div>
               <span className="status-badge status-action-required">
                 <AlertTriangle className="w-3 h-3" />
                 {trendingSKUs.filter(s => s.timeUntilStockout.includes('hour')).length} Critical
               </span>
             </div>
-            <TrendingTable data={trendingSKUs} />
+            <TopTrendingSKUs data={trendingSKUs} />
           </div>
 
           {/* AI Alerts */}

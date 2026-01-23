@@ -18,10 +18,10 @@ interface SidebarProps {
 }
 
 const navItems = [
-  { path: '/', label: 'Overview', icon: LayoutDashboard },
-  { path: '/live-trends', label: 'Live Trends', icon: TrendingUp },
+  { path: '/', label: 'Key Metrics', icon: LayoutDashboard },
+  { path: '/live-trends', label: 'Trend Radar', icon: TrendingUp },
   { path: '/demand-forecast', label: 'Demand Forecast', icon: LineChart },
-  { path: '/ai-decisions', label: 'AI Decisions', icon: Brain },
+  { path: '/ai-decisions', label: 'Recommended Actions', icon: Brain },
   { path: '/purchase-orders', label: 'Purchase Orders', icon: ShoppingCart },
   { path: '/settings', label: 'Settings', icon: Settings },
 ];
@@ -46,7 +46,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
             <Activity className="w-5 h-5 text-primary-foreground" />
           </div>
           {!collapsed && (
-            <span className="font-semibold text-foreground text-sm">Demand AI</span>
+            <span className="font-semibold text-foreground text-sm">Sensing Engine</span>
           )}
         </div>
         <button 

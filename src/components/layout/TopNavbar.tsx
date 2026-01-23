@@ -28,8 +28,8 @@ export function TopNavbar({ onMenuToggle }: TopNavbarProps) {
           <Menu className="w-5 h-5" />
         </button>
         <div>
-          <h1 className="text-lg font-semibold text-foreground">Demand Analysis & Forecast</h1>
-          <p className="text-xs text-muted-foreground">Real-time insights powered by AI</p>
+          <h1 className="text-lg font-semibold text-foreground">Sensing Engine</h1>
+          <p className="text-xs text-muted-foreground">Real-time demand sensing powered by AI</p>
         </div>
       </div>
 
